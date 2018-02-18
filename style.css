@@ -67,7 +67,8 @@
 }
 [class*='button'] {
   /* margin-top: 10px; */
-  cursor: pointer;
+  /* cursor: pointer; */
+  cursor: not-allowed;
   padding: 2.5px 0;
 }
 .hide {
