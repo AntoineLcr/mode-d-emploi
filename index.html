@@ -1,0 +1,253 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="body">
+
+
+  <div class="pageIntro">
+    <h1 class="text">APPUYER SUR ENTRER POUR DÉBUTER</h1>
+  </div>
+
+<script type="text/javascript">
+  var step = -1
+  var page, text, inputsBox, inputs, button
+  var layer, line, rect
+
+  var step1 = {
+    inputNb: 2,
+    text: 'Entrer les 2 premiers chiffres du code barre',
+    values: []
+  }
+  var step2 = {
+    inputNb: 5,
+    text: 'Entrer les 5 chiffres suivants',
+    values: []
+  }
+  var step3 = {
+    inputNb: 5,
+    text: 'Entrer les 5 chiffres suivants',
+    values: []
+  }
+  var step4 = {
+    inputNb: 1,
+    text: 'Entrer le dernier chiffre',
+    values: []
+  }
+  var steps = [step1, step2, step3, step4]
+
+
+  window.addEventListener('keydown', function(event) {
+    if (event.which === 13) {
+
+      if (step === -1) {
+        var intro = document.querySelector('.pageIntro')
+        intro.remove()
+        pageSet(steps[0])
+        console.log('instruction' + 0);
+      } else if (step%2 === 0) {
+        console.log('print' + Math.round(step/2));
+        printSet(steps[Math.round(step/2)])
+
+      } else {
+        console.log('instruction' + Math.round(step/2));
+        layer.remove()
+        pageSet(steps[Math.round(step/2)])
+      }
+      step++
+    }
+  })
+
+
+  function pageSet(step) {
+    page = gen('div', 'page1', document.body)
+    text = gen('h1', 'text', page)
+    text.textContent = step.text
+    inputsBox = gen('div', 'nothing', page)
+    inputs = []
+    for (var i = 0; i < step.inputNb; i++) {
+      inputs.push(gen('input', 'input', inputsBox))
+    }
+    button = gen('input', 'button', page)
+    inputs.push(button)
+    button.setAttribute('type', 'submit')
+    button.setAttribute('value', 'OK')
+    buttonAEL()
+    inputFocus()
+  }
+  function printSet(step) {
+    page.style.display = 'none'
+
+    for (var i = 0; i < inputs.length-1; i++) {
+      step.values.push(parseInt(inputs[i].value))
+    }
+
+    layer = gen('div', 'layer', document.body)
+
+    for (var i = 0; i < step.values.length; i++) {
+
+      line = gen('div', 'line', layer)
+      line.style.gridColumn = (step.values[i]+1) + ' / '+ (step.values[i]+2)
+
+      rect = gen('div', 'rect', layer)
+      rect.style.marginTop = (i*100/step.inputNb) + 'vh'
+      rect.style.height = 100/step.inputNb + 'vh'
+      rect.style.gridColumn = (step.values[i]+1) + ' / '+ (step.values[i]+2)
+    }
+  }
+  function buttonAEL() {
+    button.addEventListener('click', function() {
+      console.log('print' + Math.round(step/2));
+      printSet(steps[Math.round(step/2)])
+      step++
+    })
+  }
+  function gen(type, clas, parent) {
+    var el = document.createElement(type)
+    el.classList.add(clas)
+    parent.appendChild(el)
+    return el
+  }
+  function inputFocus() {
+    var i = 0
+    inputs[i].focus()
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].addEventListener('input', function() {
+        i++
+        inputs[i].focus()
+      })
+    }
+  }
+</script>
+
+<script src="">
+
+
+  var layer1 = document.querySelector('.layer1')
+  var layer2 = document.querySelector('.layer2')
+  var layer3 = document.querySelector('.layer3')
+  var layer4 = document.querySelector('.layer4')
+  var layers = [layer1, layer2, layer3, layer4]
+
+  var one = document.querySelector('.one')
+  var two = document.querySelector('.two')
+  var three = document.querySelector('.three')
+  var four = document.querySelector('.four')
+
+  var value, line, rect
+
+  one.addEventListener('input', function() {
+    if (parseInt(one.value[one.value.length-1]) || parseInt(one.value[one.value.length-1])===0 || one.value.length===0) {
+      layer1.remove()
+      layer1 = document.createElement('div')
+      layer1.classList.add('layer1')
+      document.body.appendChild(layer1)
+      for (let i = 0; i < one.value.length; i++) {
+        value = parseInt(one.value[i])
+
+        line = document.createElement('div')
+        line.classList.add('line')
+        line.style.gridColumn = (value+1) + ' / '+ (value+2)
+        layer1.appendChild(line)
+
+        rect = document.createElement('div')
+        rect.classList.add('rect')
+        rect.style.marginTop = (i*50) + 'vh'
+        rect.style.height = '50vh'
+        rect.style.gridColumn = (value+1) + ' / '+ (value+2)
+        layer1.appendChild(rect)
+      }
+    } else {
+      one.value = one.value.slice(0,-1)
+    }
+  })
+
+  two.addEventListener('input', function() {
+    if (parseInt(two.value[two.value.length-1]) || parseInt(two.value[two.value.length-1])===0 || two.value.length===0) {
+      layer2.remove()
+      layer2 = document.createElement('div')
+      layer2.classList.add('layer2')
+      document.body.appendChild(layer2)
+      for (let i = 0; i < two.value.length; i++) {
+        value = parseInt(two.value[i])
+
+        line = document.createElement('div')
+        line.classList.add('line')
+        line.style.gridColumn = (value+1) + ' / '+ (value+2)
+        layer2.appendChild(line)
+
+        rect = document.createElement('div')
+        rect.classList.add('rect')
+        rect.style.marginTop = (i*20) + 'vh'
+        rect.style.height = '20vh'
+        rect.style.gridColumn = (value+1) + ' / '+ (value+2)
+        layer2.appendChild(rect)
+      }
+    } else {
+      two.value = two.value.slice(0,-1)
+    }
+  })
+
+  three.addEventListener('input', function() {
+    if (parseInt(three.value[three.value.length-1]) || parseInt(three.value[three.value.length-1])===0 || three.value.length===0) {
+      layer3.remove()
+      layer3 = document.createElement('div')
+      layer3.classList.add('layer3')
+      document.body.appendChild(layer3)
+      for (let i = 0; i < three.value.length; i++) {
+        value = parseInt(three.value[i])
+
+        line = document.createElement('div')
+        line.classList.add('line')
+        line.style.gridColumn = (value+1) + ' / '+ (value+2)
+        layer3.appendChild(line)
+
+        rect = document.createElement('div')
+        rect.classList.add('rect')
+        rect.style.marginTop = (i*20) + 'vh'
+        rect.style.height = '20vh'
+        rect.style.gridColumn = (value+1) + ' / '+ (value+2)
+        layer3.appendChild(rect)
+      }
+    } else {
+      three.value = three.value.slice(0,-1)
+    }
+  })
+
+  four.addEventListener('input', function() {
+    if (parseInt(four.value[four.value.length-1]) || parseInt(four.value[four.value.length-1])===0 || four.value.length===0) {
+      layer4.remove()
+      layer4 = document.createElement('div')
+      layer4.classList.add('layer4')
+      document.body.appendChild(layer4)
+      for (let i = 0; i < four.value.length; i++) {
+        value = parseInt(four.value[i])
+
+        line = document.createElement('div')
+        line.classList.add('line')
+        line.style.gridColumn = (value+1) + ' / '+ (value+2)
+        layer4.appendChild(line)
+
+        rect = document.createElement('div')
+        rect.classList.add('rect')
+        // rect.style.marginTop = (i*50) + 'vh'
+        rect.style.height = '100vh'
+        rect.style.gridColumn = (value+1) + ' / '+ (value+2)
+        layer4.appendChild(rect)
+      }
+    } else {
+      four.value = four.value.slice(0,-1)
+    }
+  })
+
+
+
+</script>
+
+</body>
+</html>
