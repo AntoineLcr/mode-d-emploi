@@ -48,21 +48,21 @@
       if (step === -1) {
         var intro = document.querySelector('.pageIntro')
         intro.remove()
-        pageSet(steps[0])
-        console.log('instruction' + 0);
+        step++
+        pageSet(steps[step])
+        console.log('instruction' + step);
       } else if (step%2 === 0) {
-        console.log('print' + Math.round(step/2));
-        printSet(steps[Math.round(step/2)])
-
+        // console.log('print' + Math.round(step/2));
+        // printSet(steps[Math.round(step/2)])
       } else {
         console.log('instruction' + Math.round(step/2));
         layer.remove()
         pageSet(steps[Math.round(step/2)])
+        step++
       }
-      step++
+
     }
   })
-
 
   function pageSet(step) {
     page = gen('div', 'page1', document.body)
@@ -77,7 +77,7 @@
     inputs.push(button)
     button.setAttribute('type', 'submit')
     button.setAttribute('value', 'OK')
-    // buttonAEL()
+    buttonAEL()
     inputFocus()
   }
   function printSet(step) {
@@ -118,135 +118,15 @@
     inputs[i].focus()
     for (let i = 0; i < inputs.length; i++) {
       inputs[i].addEventListener('input', function() {
-        i++
-        inputs[i].focus()
+        inputs[i+1].focus()
       })
+      if (inputs[i].type === 'text') {
+        inputs[i].addEventListener('focus', function() {
+          inputs[i].value = ''
+        })
+      }
     }
   }
-</script>
-
-<script src="">
-
-
-  var layer1 = document.querySelector('.layer1')
-  var layer2 = document.querySelector('.layer2')
-  var layer3 = document.querySelector('.layer3')
-  var layer4 = document.querySelector('.layer4')
-  var layers = [layer1, layer2, layer3, layer4]
-
-  var one = document.querySelector('.one')
-  var two = document.querySelector('.two')
-  var three = document.querySelector('.three')
-  var four = document.querySelector('.four')
-
-  var value, line, rect
-
-  one.addEventListener('input', function() {
-    if (parseInt(one.value[one.value.length-1]) || parseInt(one.value[one.value.length-1])===0 || one.value.length===0) {
-      layer1.remove()
-      layer1 = document.createElement('div')
-      layer1.classList.add('layer1')
-      document.body.appendChild(layer1)
-      for (let i = 0; i < one.value.length; i++) {
-        value = parseInt(one.value[i])
-
-        line = document.createElement('div')
-        line.classList.add('line')
-        line.style.gridColumn = (value+1) + ' / '+ (value+2)
-        layer1.appendChild(line)
-
-        rect = document.createElement('div')
-        rect.classList.add('rect')
-        rect.style.marginTop = (i*50) + 'vh'
-        rect.style.height = '50vh'
-        rect.style.gridColumn = (value+1) + ' / '+ (value+2)
-        layer1.appendChild(rect)
-      }
-    } else {
-      one.value = one.value.slice(0,-1)
-    }
-  })
-
-  two.addEventListener('input', function() {
-    if (parseInt(two.value[two.value.length-1]) || parseInt(two.value[two.value.length-1])===0 || two.value.length===0) {
-      layer2.remove()
-      layer2 = document.createElement('div')
-      layer2.classList.add('layer2')
-      document.body.appendChild(layer2)
-      for (let i = 0; i < two.value.length; i++) {
-        value = parseInt(two.value[i])
-
-        line = document.createElement('div')
-        line.classList.add('line')
-        line.style.gridColumn = (value+1) + ' / '+ (value+2)
-        layer2.appendChild(line)
-
-        rect = document.createElement('div')
-        rect.classList.add('rect')
-        rect.style.marginTop = (i*20) + 'vh'
-        rect.style.height = '20vh'
-        rect.style.gridColumn = (value+1) + ' / '+ (value+2)
-        layer2.appendChild(rect)
-      }
-    } else {
-      two.value = two.value.slice(0,-1)
-    }
-  })
-
-  three.addEventListener('input', function() {
-    if (parseInt(three.value[three.value.length-1]) || parseInt(three.value[three.value.length-1])===0 || three.value.length===0) {
-      layer3.remove()
-      layer3 = document.createElement('div')
-      layer3.classList.add('layer3')
-      document.body.appendChild(layer3)
-      for (let i = 0; i < three.value.length; i++) {
-        value = parseInt(three.value[i])
-
-        line = document.createElement('div')
-        line.classList.add('line')
-        line.style.gridColumn = (value+1) + ' / '+ (value+2)
-        layer3.appendChild(line)
-
-        rect = document.createElement('div')
-        rect.classList.add('rect')
-        rect.style.marginTop = (i*20) + 'vh'
-        rect.style.height = '20vh'
-        rect.style.gridColumn = (value+1) + ' / '+ (value+2)
-        layer3.appendChild(rect)
-      }
-    } else {
-      three.value = three.value.slice(0,-1)
-    }
-  })
-
-  four.addEventListener('input', function() {
-    if (parseInt(four.value[four.value.length-1]) || parseInt(four.value[four.value.length-1])===0 || four.value.length===0) {
-      layer4.remove()
-      layer4 = document.createElement('div')
-      layer4.classList.add('layer4')
-      document.body.appendChild(layer4)
-      for (let i = 0; i < four.value.length; i++) {
-        value = parseInt(four.value[i])
-
-        line = document.createElement('div')
-        line.classList.add('line')
-        line.style.gridColumn = (value+1) + ' / '+ (value+2)
-        layer4.appendChild(line)
-
-        rect = document.createElement('div')
-        rect.classList.add('rect')
-        // rect.style.marginTop = (i*50) + 'vh'
-        rect.style.height = '100vh'
-        rect.style.gridColumn = (value+1) + ' / '+ (value+2)
-        layer4.appendChild(rect)
-      }
-    } else {
-      four.value = four.value.slice(0,-1)
-    }
-  })
-
-
-
 </script>
 
 </body>
